@@ -30,7 +30,7 @@ Si el usuario no quiere escuchar una radio aleatoria regulada por la temperatura
 El usuario tiene la opción de poder regular el volumen al que quiere escuchar tanto el archivo .wav o .mp3 como la radio. 
 
 
-## Explicacion del codigo
+## Explicación del código
 
 ```
 #include <Arduino.h>
