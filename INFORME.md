@@ -212,7 +212,7 @@ void displaymenu() {
               audio.connecttohost("http://s3-webradio.antenne.de/classic-rock-live.aac");
            }
             else if(selected==3){
-             // PLay radio 2
+             // PLay radio 3
                Serial.println("The Big 80s Station");
              // audio.connecttohost("http://s5.nexuscast.com:8065/;");
               audio.connecttohost("http://158.69.114.190:8024/stream");
