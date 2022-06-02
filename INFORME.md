@@ -60,10 +60,10 @@ El usuario tiene la opción de poder regular el volumen al que quiere escuchar t
 #define I2S_DOUT      17
 #define I2S_BCLK      27
 #define I2S_LRC       26
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+#define SCREEN_WIDTH 128 // OLED display width, en pixels
+#define SCREEN_HEIGHT 64 // OLED display height, en pixels
 #define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
-#define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
+#define SCREEN_ADDRESS 0x3C ///0x3D for 128x64, 0x3C for 128x32
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 Audio audio;
 ///Inicializamos los datos wifi para poder encontrar las emisoras.
@@ -312,10 +312,10 @@ void setup() {
     for (;;); // Don't proceed, loop forever
   }
   display.clearDisplay();
-  // Draw a single pixel in white
+  // dibuja u pixel en blanco
   display.drawPixel(10, 10, SSD1306_WHITE);
   display.display();
-  delay(2000); // Pause for 2 seconds
+  delay(2000); // Pausa por 2 seconds
  displaySubMenu();
  //crea la tarea ask0code y la pone en el core 1
 xTaskCreatePinnedToCore(
@@ -329,7 +329,7 @@ xTaskCreatePinnedToCore(
 }
  
 void loop() {
-  // put your main code here, to run repeatedly:
+
   displaymenu();
   
   audio.loop();
