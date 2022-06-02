@@ -268,46 +268,47 @@ void Task0code( void * pvParameters ){
     }
   }
   void setupTemp() {
-    Serial.begin(115200);
+    Serial.begin(115200);//pone max 115200bps
     Serial.println();
     Serial.println();
-    Serial.println("HTU21D Example!");
-    myHumidity.begin();
+    Serial.println("HTU21D Example!"); //escribe en la terminal
+    myHumidity.begin(); //inicializa el sensor de humedad y temperatura
 }
 void setupSD(){ //setup SD
-    pinMode(SD_CS, OUTPUT);
+    pinMode(SD_CS, OUTPUT); //conecta los pines
     digitalWrite(SD_CS, HIGH);
-    SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI);
-    Serial.begin(115200);
-    SD.begin(SD_CS);
+    SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI); //inicializa el SPI
+    Serial.begin(115200);//pone max 115200bps
+    SD.begin(SD_CS); //inicializa SD
     audio.setPinout(I2S_BCLK, I2S_LRC, I2S_DOUT);
-    audio.setVolume(10); // 0...21
+    audio.setVolume(10); // pone el volumen 0 a 21 
    
    
 }
 void setupRadio() {//setup radio
-    pinMode(SD_CS, OUTPUT);      digitalWrite(SD_CS, HIGH);
-    SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI);
-    Serial.begin(115200);
-    SD.begin(SD_CS);
-    WiFi.disconnect();
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid.c_str(), password.c_str());
-    while (WiFi.status() != WL_CONNECTED) delay(1500);
-    audio.setPinout(I2S_BCLK, I2S_LRC, I2S_DOUT);
-    audio.setVolume(21); // 0...21
+    pinMode(SD_CS, OUTPUT);  //conecta los pines
+    digitalWrite(SD_CS, HIGH);
+    SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI); //inicializa el SPI
+    Serial.begin(115200); //pone max 115200bps
+    SD.begin(SD_CS); //inicializa SD
+    WiFi.disconnect(); //DESCONECTA EL WI-FI
+    WiFi.mode(WIFI_STA); //llama al mode
+    WiFi.begin(ssid.c_str(), password.c_str()); //pone el SSID y la contraseña del wi-fi
+    while (WiFi.status() != WL_CONNECTED) delay(1500); //si no se conecta tiene un delay
+    audio.setPinout(I2S_BCLK, I2S_LRC, I2S_DOUT); 
+    audio.setVolume(21); // pone el volumen 0 a 21 
 }
 void setup() {
- setupTemp();
+ setupTemp(); //llamada al setupTemp()
  //setupSD();
-  setupRadio();
-  pinMode(25, INPUT_PULLUP);
+  setupRadio();//llamada al setupRadio()
+  pinMode(25, INPUT_PULLUP); //pone los pines como INPUT
  // pinMode(33, INPUT_PULLUP);
   pinMode(32, INPUT_PULLUP);
   pinMode(33, INPUT_PULLUP);
-  Serial.begin(115200);
-  if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
-    Serial.println(F("SSD1306 allocation failed"));
+  Serial.begin(115200);//pone max 115200bps
+  if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) { //si no puede inicializar el display 
+    Serial.println(F("SSD1306 allocation failed"));//escribirá SSD1306 allocation failed
     for (;;); // Don't proceed, loop forever
   }
   display.clearDisplay();
@@ -316,6 +317,7 @@ void setup() {
   display.display();
   delay(2000); // Pause for 2 seconds
  displaySubMenu();
+ //crea la tarea ask0code y la pone en el core 1
 xTaskCreatePinnedToCore(
                     Task0code,   
                     "Task0",    
