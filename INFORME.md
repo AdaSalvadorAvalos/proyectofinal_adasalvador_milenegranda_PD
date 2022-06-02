@@ -77,7 +77,8 @@ TaskHandle_t Task0;
  
   int total_options = 3;
   float temp = 0;
-/// Se muestra el menu para el usuario
+/// Se muestra un menu concreto del usuario. options es un vector de opciones, num_opciones:numero de opciones que tiene el menú.Option: es el titulo del menu
+//Se mira la variable global selected para cambiar el color d ela opcion seleccionada
 void ShowMenu(char **options,int num_options,char *opcion){
       char title[200];
       sprintf(title,"%s (%f)",opcion, temp );
@@ -99,8 +100,11 @@ void ShowMenu(char **options,int num_options,char *opcion){
         }
       }
   }
+  
+  
 void displaySubMenu()
 {
+//Estos vectores definen las diferentes opciones de los menús y se pasará como parámetro a la función anterior
 ///El menú tiene las opciones siguientes:
 const char *options[3] = {
     " 1.- RADIO",
@@ -128,6 +132,9 @@ const char *options[3] = {
     "Nights - Frank Ocean",
     
   };
+  
+  
+  //La variable global entered indica en que submenú estamos. Entered =-1 es el menú principal
   if (entered == -1) {
     
         ShowMenu((char **)options,3,"MENU");
@@ -150,7 +157,7 @@ void displaymenu() {
   int button3 = digitalRead(32); //enter
   int button4 = digitalRead(33); //back
   
-// ependiendo de las condiciones de los botones: 
+// dependiendo de las condiciones de los botones: 
   if (button1 == LOW) {
     if(selected<total_options-1){
       selected = selected + 1;
@@ -162,13 +169,16 @@ void displaymenu() {
     }
      displaySubMenu();
   };
+  
+  //Han pulsado en entrar
   if (button3 == LOW) {
     
-  
+  //estamos en el menú principal
       if(entered==-1){
           entered = selected;
           if(entered==0){
-             // En radio seleccionamos por defecto según la temperatura
+          //han seleccionado entrar en el menú radio
+             // En radio seleccionamos por defecto según la temperatura usando la variable global temp
              if(temp>30){
                selected = 0;
                
@@ -246,6 +256,10 @@ void displaymenu() {
   };
  
 }
+
+//esta es la tarea que lee todo el rato la temperatura y la guarda en una variable global que se llama temp.
+// la variable temp es global porque será consultada desde la otra tarea para que cuando se entre en el menú radio en lugar de seleccionar por defecto la 0 
+// seleccione una dependiendo de esta variable global
 void Task0code( void * pvParameters ){
   delay(100);
   for (;;){  //create an infinate loop
@@ -260,7 +274,7 @@ void Task0code( void * pvParameters ){
     Serial.println("HTU21D Example!");
     myHumidity.begin();
 }
-void setupSD(){
+void setupSD(){ //setup SD
     pinMode(SD_CS, OUTPUT);
     digitalWrite(SD_CS, HIGH);
     SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI);
@@ -271,7 +285,7 @@ void setupSD(){
    
    
 }
-void setupRadio() {
+void setupRadio() {//setup radio
     pinMode(SD_CS, OUTPUT);      digitalWrite(SD_CS, HIGH);
     SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI);
     Serial.begin(115200);
